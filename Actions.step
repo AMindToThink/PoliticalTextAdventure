@@ -57,7 +57,7 @@
 To [look ?].
 Report [look ?agent]:
     [Location ?agent ?here]
-    [firstOf] You are in ?here/DescriptivePhrase.[else][end]  [firstOf]?here/Description[else][end]
+    [firstOf] You are ?here/DescriptivePhrase.[else][end]  [firstOf]?here/Description[else][end]
     [Paragraph]
     You see [PrintList ?thing [Collocated ?thing ?agent]].
     [AccumulateOutput [OtherSide ?door ?here ?there] [DescribeDoor ?door ?there]]

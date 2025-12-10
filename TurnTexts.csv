@@ -1,2 +1,2 @@
-TurnNumber,@TurnText
-0,"'TOUCHDOWN!' The voice comes from the TV. Your Fantasy Football team just lost completely and utterly. You knew that football players often have early onset brain degradation, but why did it have to happen to your guys instead of the other guys? Your 'friends' gather around you. The loser's punishment is to record and post a political rant for the internet."
+SituationID,TurnNumber,@TurnText,
+football loss,0,"'TOUCHDOWN!' The voice comes from the TV. Your Fantasy Football team just lost completely and utterly. You knew that football players often have early onset brain degradation, but why did it have to happen to your guys instead of the other guys? Your 'friends' gather around you. The loser's punishment is to record and post a political rant for the internet."

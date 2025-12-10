@@ -4,7 +4,7 @@
 
 ##
 ## ADDING NEW OBJECTS
-## To add a new object, choose an internal name for it, generally a short string like "home" or "box1".
+## To add a new object, choose an internal name for it, generally a short string like "campaign" or "box1".
 ## Then add a method of the form:
 ##   Type internal_name type.
 ## where type is whatever kind of object it is (room, thing, door, cat) or any other type defined using KindOf.
@@ -49,27 +49,27 @@ WriteTurnText: [TurnText MyTurn ?turnText] ?turnText
 WriteTurnText.
 Money treasury 10.
 
-Type home cottage.
-KindOf cottage room.
-Description home: a rustic cottage.  exposed wood logs make up the walls.
+Type campaign room.
+Description campaign: Win votes, or be forgotten and ridiculed forever.
+DescriptivePhrase campaign: on the campaign trail
 
 Type outdoors room.
 DescriptivePhrase outdoors: outdoors
 Description outdoors: the great outdoors on a warm, sunny day.
 
 Type exit door.
-Connects exit home outdoors.
+Connects exit campaign outdoors.
 DescriptivePhrase exit: a sturdy wooden door
 Description exit: [Location player ?here] [OtherSide exit ?here ?there] a strong wooden door.  Through a little window in it, you see ?there
 
 KindOf box container.
 Type cardboard_box box.
-Location cardboard_box home.
+Location cardboard_box campaign.
 DescriptivePhrase cardboard_box: a grungy old amazon box
 
 Type player person.
-Location player home.
-Open home.
+Location player campaign.
+Open campaign.
 Open outdoors.
 Open player.
 
@@ -90,7 +90,7 @@ MaybeBreakLamp: The cat knocks over the lamp.  The room is plunged into darkness
 
 Type benji mouse.
 KindOf mouse animal.
-Location benji home.
+Location benji campaign.
 DescriptivePhrase benji: [Collocated benji bruce] a nervous-looking mouse
 DescriptivePhrase benji: a sleeping mouse
 Tick benji: [Location benji ?where] [OtherSide ?door ?where outdoors] [Open ?door] [now [Location benji outdoors]] The mouse runs out the door.
@@ -98,13 +98,13 @@ Tick benji: [Collocated benji bruce] the mouse squeeks in terror.
 Failure [move ? benji ?]: The mouse bites your hand.
 
 Type theLamp lamp.
-Location theLamp home.
+Location theLamp campaign.
 SwitchedOn theLamp.
 DescriptivePhrase theLamp: a floor lamp
 Description theLamp: it's a midcentury modern floor lamp in a bizarre shade of chartreuse.
 
 Type doctor person.
-Location doctor home.
+Location doctor campaign.
 DescriptivePhrase doctor: a creepy-looking plague doctor.
 Description doctor: he has a weird beak and everything
 Murderousness doctor low.
@@ -114,19 +114,19 @@ After [examine player doctor] [Begin [Now [Location player "the outer dark"]] [W
 Now ?call: [now ?call]
 
 Type myCookie cookie.
-Location myCookie home.
+Location myCookie campaign.
 DescriptivePhrase myCookie: a cookie which says 'eat me'
 Description myCookie: it smells pretty good
 After [eat player myCookie] [Write "You broke your diet. Shame on you."].
 
 Type myKnife knife.
-Location myKnife home.
+Location myKnife campaign.
 DescriptivePhrase myKnife: a sharp-looking knife
 Description myKnife: [now [Bleeding player]] you slice your finger while examining the knife.
 Tick player: [Bleeding player] you bleed some more
 
 Type scarytoy toy.
-Location scarytoy home.
+Location scarytoy campaign.
 Murderousness scarytoy high.
 KindOf scarytoy container.
 DescriptivePhrase scarytoy: a scary-looking toy
@@ -134,7 +134,7 @@ Description scarytoy: he has a scar over his eye. I don't think cats want to mes
 Failure [stab player scarytoy]: [Begin [Now [Location myKnife scarytoy]] [Write "the scary toy takes your knife"]].
 
 Type unity gameEngine.
-Location unity home.
+Location unity campaign.
 DescriptivePhrase unity: the once-beloved Unity game engine that lost favor due to a pricing fiasco
 Description unity: you can still hear it calling to you to make more video games. Maybe one day you'll answer.
 

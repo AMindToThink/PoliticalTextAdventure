@@ -153,3 +153,8 @@ Destroy ?object: [Location ?object ?where] [now [Not [Location ?object ?where]]]
 
 # STATUS EFFECTS
 [function] fluent Bleeding ?thing.
+
+[function]
+fluent Turn ?value.
+[function]
+fluent Money ?owner ?value.

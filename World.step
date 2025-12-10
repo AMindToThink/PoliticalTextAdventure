@@ -43,7 +43,10 @@
 ##    Tick internal_name: stuff to do after every command...
 ## If you want it to run actions from Actions.step, you can do that by saying [Do [action args...]].
 ##
-initially: [set Turn = 0]
+initially: [set MyTurn = 0]
+WriteTurn: Turn ^MyTurn:[NewLine] [WriteTurnText]
+WriteTurnText: [TurnText MyTurn ?turnText] ?turnText
+WriteTurnText.
 Money treasury 10.
 
 Type home cottage.

@@ -158,3 +158,9 @@ Destroy ?object: [Location ?object ?where] [now [Not [Location ?object ?where]]]
 fluent Turn ?value.
 [function]
 fluent Money ?owner ?value.
+
+[predicate]
+predicate TurnText ? ?.
+
+[predicate] 
+predicate WriteTurn.

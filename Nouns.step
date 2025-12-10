@@ -1,0 +1,9 @@
+###
+### NOUNS
+### Something is a noun if it's used as a kind.
+###
+
+predicate Noun ?singular.
+
+Noun ?n: [Type ? ?n]
+Noun ?n: [KindOf ? ?n]

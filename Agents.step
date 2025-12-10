@@ -1,0 +1,8 @@
+###
+### TICKING ACTORS
+###
+
+task Tick ?actor.
+[default] Tick ?.
+
+TickEverybody: [AccumulateOutput [IsA ?who agent] [Tick ?who]]

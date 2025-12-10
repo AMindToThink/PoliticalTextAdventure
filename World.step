@@ -1,0 +1,137 @@
+###
+### OBJECTS IN THE GAME WORLD
+###
+
+##
+## ADDING NEW OBJECTS
+## To add a new object, choose an internal name for it, generally a short string like "home" or "box1".
+## Then add a method of the form:
+##   Type internal_name type.
+## where type is whatever kind of object it is (room, thing, door, cat) or any other type defined using KindOf.
+##
+## Then write a Description method for it.  This will get printed when the player examines it.  You generally want it to be more interesting
+## than just the type name of it.
+##   Description internal_name: some sentences describing it in detail...
+##
+## Then you generally want to write a DescriptivePhrase method for it:
+##   DescriptivePhrase internal_name: some noun-phrase describing it
+## If you don't include a DescriptivePhrase method, it will just say "a type", which is kind of boring.
+##
+## If the object isn't a room or door, you'll want to specify where it is:
+##   Location internal_name room_or_container.
+##
+## Rooms aren't contained in other containers, although regions (room containers) will be supported at some point.
+## Doors are in two places at once, so you don't use Location methods, you use a Connects method:
+##   Connects internal_name_of_the_door room1 room2.
+## 
+## Now add any other declarations you want to add to specify the details of the object, e.g.
+## Open, Closed, SwitchedOn, etc.
+##
+## Finally, if you want to customize the behavior of actions for this object, add InsteadOf, Before, After,
+## or Failure methods for those actions to override its usual behavior.
+##
+
+##
+## OBJECTS THAT BEHAVIOR AUTONOMOUSLY
+## To make an object do something on it's own, make it an instance of the agent type.  People and animals
+## are already instances of agent, but if you're using your own kind of type that isn't a subtype of those,
+## then just add:
+##    KindOf myType agent.
+## Or for a one-off of an object that doesn't have a special type, just add an extra Type method for it.
+##
+## Now define a Tick method for it:
+##    Tick internal_name: stuff to do after every command...
+## If you want it to run actions from Actions.step, you can do that by saying [Do [action args...]].
+##
+
+Type home cottage.
+KindOf cottage room.
+Description home: a rustic cottage.  exposed wood logs make up the walls.
+
+Type outdoors room.
+DescriptivePhrase outdoors: outdoors
+Description outdoors: the great outdoors on a warm, sunny day.
+
+Type exit door.
+Connects exit home outdoors.
+DescriptivePhrase exit: a sturdy wooden door
+Description exit: [Location player ?here] [OtherSide exit ?here ?there] a strong wooden door.  Through a little window in it, you see ?there
+
+KindOf box container.
+Type cardboard_box box.
+Location cardboard_box home.
+DescriptivePhrase cardboard_box: a grungy old amazon box
+
+Type player person.
+Location player home.
+Open home.
+Open outdoors.
+Open player.
+
+Type bruce cat.
+KindOf cat animal.
+Location bruce cardboard_box.
+DescriptivePhrase bruce: [Location bruce cardboard_box] a contented-looking ginger tabby
+DescriptivePhrase bruce: a cat in hunter-mode
+Tick bruce: [Collocated bruce benji] the cat chases the mouse around the room.  [MaybeBreakLamp]
+Tick bruce: [Location bruce ?container] [IsA ?container box] [Not [Open ?container]] annoyed meowing comes from ?container.
+Tick bruce: [Collocated bruce ?box] [IsA ?box box] [Open ?box] [now [Location bruce ?box]] The cat jumps in the box.
+After [open ? ?container] [Escape]: [Location bruce ?container]
+Escape: the cat jumps out of the box.  [Location ?bruce ?container] [Location ?container ?room] [now [Location ?bruce ?room]]
+
+[randomly]
+MaybeBreakLamp: The cat knocks over the lamp.  The room is plunged into darkness.  [now [Not [SwitchedOn theLamp]]]
+[3] MaybeBreakLamp.
+
+Type benji mouse.
+KindOf mouse animal.
+Location benji home.
+DescriptivePhrase benji: [Collocated benji bruce] a nervous-looking mouse
+DescriptivePhrase benji: a sleeping mouse
+Tick benji: [Location benji ?where] [OtherSide ?door ?where outdoors] [Open ?door] [now [Location benji outdoors]] The mouse runs out the door.
+Tick benji: [Collocated benji bruce] the mouse squeeks in terror.
+Failure [move ? benji ?]: The mouse bites your hand.
+
+Type theLamp lamp.
+Location theLamp home.
+SwitchedOn theLamp.
+DescriptivePhrase theLamp: a floor lamp
+Description theLamp: it's a midcentury modern floor lamp in a bizarre shade of chartreuse.
+
+Type doctor person.
+Location doctor home.
+DescriptivePhrase doctor: a creepy-looking plague doctor.
+Description doctor: he has a weird beak and everything
+Murderousness doctor low.
+After [examine player doctor] [Now [Murderousness doctor high]]: [Murderousness doctor low] 
+After [examine player doctor] [Begin [Now [Location player "the outer dark"]] [Write "The doctor casts a spell on you and you die."]]: [Murderousness doctor high]
+
+Now ?call: [now ?call]
+
+Type myCookie cookie.
+Location myCookie home.
+DescriptivePhrase myCookie: a cookie which says 'eat me'
+Description myCookie: it smells pretty good
+After [eat player myCookie] [Write "You broke your diet. Shame on you."].
+
+Type myKnife knife.
+Location myKnife home.
+DescriptivePhrase myKnife: a sharp-looking knife
+Description myKnife: [now [Bleeding player]] you slice your finger while examining the knife.
+Tick player: [Bleeding player] you bleed some more
+
+Type scarytoy toy.
+Location scarytoy home.
+Murderousness scarytoy high.
+KindOf scarytoy container.
+DescriptivePhrase scarytoy: a scary-looking toy
+Description scarytoy: he has a scar over his eye. I don't think cats want to mess with him.
+Failure [stab player scarytoy]: [Begin [Now [Location myKnife scarytoy]] [Write "the scary toy takes your knife"]].
+
+Type unity gameEngine.
+Location unity home.
+DescriptivePhrase unity: the once-beloved Unity game engine that lost favor due to a pricing fiasco
+Description unity: you can still hear it calling to you to make more video games. Maybe one day you'll answer.
+
+
+# Elements added: doctor, myCookie, myKnife, scarytoy, unity

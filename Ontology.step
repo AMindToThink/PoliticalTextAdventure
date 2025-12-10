@@ -1,0 +1,155 @@
+###
+### Kinds of things
+###
+### - To declare the type of some ?object, add a Type method: Type ?object ?type.
+###   The system will know that it is also of ?type's parent types.
+### - To query if an object is of a type, use an IsA call: [IsA ?object ?type].
+###   Do not add new IsA methods.  Add Type methods.
+### - Do declare that a ?childType is a subtype of ?parentType, add a KindOf method:
+###       KindOf ?childType ?parentType
+###   the system will understand that it is also a subtype of ?parentType's parents.
+### - To query if a type is a subtype of another, use a Subtype call: [Subtype ?sub ?super].
+###   Do not add new Subtype methods.  Add KindOf methods.
+###
+
+predicate Type ?object ?baseType.
+predicate IsA ?thing ?type.
+IsA ?thing (NonVar ?type): [Subtype ?sub ?type] [Type ?thing ?sub]
+IsA (NonVar ?thing) ?type: [Type ?thing ?t] [Subtype ?t ?type]
+
+predicate KindOf ?subtype ?type.
+
+[predicate]
+Subtype (Var ?_sub) (Var ?_super): [Throw "Subtype called with variables for both arguments"]
+Subtype ?t ?t.
+Subtype ?sub ?super: [KindOf ?sub ?t] [Subtype ?t ?super]
+
+###
+### Build-in types
+### This is a slightly modified version of the type hierarchy from Inform 7.
+### The only differences are:
+### - Added a location type that is a parent of container, room, and region
+### - Added a agent type as a parent of person
+### - Added a lamp type so that lighting logic could be in this file.
+###
+
+KindOf thing object.
+KindOf direction object.
+KindOf location object.
+KindOf room location.
+KindOf thing object.
+KindOf region location.
+
+KindOf door thing.
+KindOf container thing.
+KindOf container location.
+KindOf supporter thing.
+KindOf supporter location.
+KindOf backdrop thing.
+KindOf device thing.
+KindOf lamp device.
+
+KindOf agent thing.
+KindOf agent location.
+KindOf person agent.
+KindOf human person.
+KindOf animal person.
+
+KindOf cookie food.
+KindOf weapon thing.
+KindOf knife weapon.
+KindOf toy thing.
+
+
+###
+### THINGS
+###
+
+# ?thing can't be moved
+predicate Immovable ?thing.
+
+###
+### LOCATIONS
+###
+
+# ?object is in ?location.
+# This is a fluent, so you can change it.  It' also a function, which means
+# there can only be one ?location per object.  If say [now [Location fred bar]],
+# it automatically implies that fred isn't anywhere else.
+[function] fluent Location ?object ?location.
+
+# ?a and ?b are in the same place.
+[predicate]
+Collocated ?a ?b: [Location ?a ?where] [Location ?b ?where] [Different ?a ?b]
+
+###
+### CONTAINERS
+### These are things that can also be locations for other things
+###
+
+# ?container is open, and therefore its contents are accessible.
+# Note that doors are also openable, although they are not containers.
+fluent Open ?container.
+# ?container is closed, and therefore its contents are inaccessible.
+[predicate] Closed ?container: [Not [Open ?container]]
+
+# ?this is something that is openable.
+[predicate]
+[default] Openable ?thing: [IsA ?thing container]
+[default] Openable ?thing: [IsA ?thing door]
+
+###
+### DOORS
+### These connect two rooms.  Note that they are not "in" either room.
+### So don't include a Location method for them.  Instead, use an Connects
+### method.
+###
+### See also Openable, Open, and Closed, above.
+###
+
+# ?door connects ?room1 to ?room2.
+# Add a method for this to add a door between rooms.  You only need one method;
+# your don't have to separately connect ?room2 to ?room1.
+# To query if a door is connected to some room, it's easiest to use OtherSide.
+predicate Connects ?door ?room1 ?room2.
+
+# ?door is in room ?thisSide and connects to the room ?otherSide.
+# You can use this to find out what's on the other side of the door,
+# to test if a door is in a specific room, or just to ask what doors
+# are in a given room.
+[predicate]
+OtherSide ?door ?thisSide ?thatSide: [Connects ?door ?thisSide ?thatSide]
+OtherSide ?door ?thisSide ?thatSide: [Connects ?door ?thatSide ?thisSide]
+
+###
+### DEVICES
+### These are things you can switch on and off.
+###
+
+# ?device is switched on.
+fluent SwitchedOn ?device.
+
+###
+### LAMPS
+###
+
+# ?room has a lamp in it that's switched on.
+[predicate]
+[default] Illuminated ?room: [Once [Location ?thing ?room] [IsA ?thing lamp] [SwitchedOn ?thing]]
+
+# ?agent is in a room with light.
+[predicate]
+[default] CanSee ?agent: [Location ?agent ?place] [Illuminated ?place]
+
+###
+### DESTRUCTION
+###
+
+# Remove ?object from the game
+Destroy ?object: [Location ?object ?where] [now [Not [Location ?object ?where]]]  # object is not nowhere
+
+# EMOTIONS
+[function] fluent Murderousness ?thing ?extent.
+
+# STATUS EFFECTS
+[function] fluent Bleeding ?thing.

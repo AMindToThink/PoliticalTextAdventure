@@ -1,0 +1,37 @@
+#
+# Dumb little implementation of aspect-oriented programming as used in Inform 7.
+#
+# You run an action by calling [Do ?action]
+# - It will check the InsteadOf rules to see if it should substitute some other action.
+#   If so, it will Do that instead.  
+# - Then it will run [Failure ?action].  If this succeeds (some Failure ?action rule
+#   succeeds), then it will stop.
+# - If there is no failure, it will run all the calls specified by [Before ?action ?call]
+#   methods that match the action.
+# - Then it will run [To ?action].
+# - Then it will run all the calls in matching [After ?action ?call] methods
+# - Finally, it will run [Report ?action].
+#
+
+predicate InsteadOf ?action ?task.
+predicate Before ?action ?task.
+predicate After ?action ?task.
+predicate Failure ?action.
+predicate Report ?action.
+
+[default] To ?action: I don't know how to ?action.  [BailOut]
+[default] Do ?action: [InsteadOf ?action ?alternative] [Do ?alternative]
+[default] Do ?action: [Failure ?action]
+[default] Do ?action:
+    [AccumulateOutput [Before ?action ?btask] ?btask]
+    [To ?action]
+    [AccumulateOutput [After ?action ?atask] ?atask]
+    [Report ?action]
+[end]
+
+[default] Report ?action:
+    [ReferencesOf Addressee ?newLf ?action]
+    [LogicalForm ?newSyntax ?newLf]
+    [SyntacticForm ?newWords declarative ?newSyntax]
+    ?newWords/Write
+[end]

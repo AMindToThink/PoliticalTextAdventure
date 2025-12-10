@@ -1,0 +1,11 @@
+###
+### VERBS
+### Something is a verb if it appears as a verb in a parse tree for a LogicalForm method.
+###
+
+predicate Verb ?valence ?baseForm.
+
+# Something is a verb if it's used as a verb in a syntactic structure of some command
+Verb intransitive ?verb: [LogicalForm [s ? [vp ?verb ?]] ?]
+Verb transitive ?verb: [LogicalForm [s ? [vp ?verb ? ?]] ?]
+Verb ditransitive ?verb: [LogicalForm [s ? [vp ?verb ? ? ?]] ?]

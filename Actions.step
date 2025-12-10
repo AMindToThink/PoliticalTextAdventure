@@ -1,0 +1,148 @@
+###
+### ACTIONS
+###
+
+##
+## Actions are not the same as tasks.  They have a bunch of special features to make it easy to customize their
+## behavior for specific objects, kinds of objects, or states of the world, by defining InsteadOf, Failure,
+## Before, After, and Report methods for them.
+## 
+## To run an action, call [Do [action args...]], although there's a good chance you'll never need to call one
+## directly. Because actions are not tasks, their names aren't capitalized.  Their names are just strings.
+##
+
+##
+## DEFINING NEW ACTIONS
+## To define a new action, write a To method for it:
+##    To [action args...]: how to run the action
+## This should implement any changes to the world caused by the action.  But shouldn't print anything,
+## do error checking, or customize its behavior for specific objects or types.  That should be done
+## other methods (see below).
+##
+## Then write a report method, assuming you want the action to print something when it's done:
+##    Report [action args ...]: what to print
+##
+## Finally, write at least one LogicalForm method to tell the parser what parse trees refer to this action
+##    LogicalForm parse_tree [action args ...]
+## You can have as many LogicalForm methods as you want but you need at least one or the user won't be able to run it.
+##
+## To implement error checking, write methods of the form:
+##    Failure [action args ...]: [Some test for a problem] Some message describing what went wrong.
+## You can have as many failure methods as you like.
+##
+
+##
+## CUSTOMIZING ACTIONS FOR SPECIFIC OBJECTS OR SITUATIONS
+##
+## To customize the behavior of the action for specific objects, kinds of objects, or states of the world,
+## add any of the following methods.  We recommend putthing these methods in with the code for the objects
+## (i.e. in World.step) rather than here.  But they'll work wherever you put them.
+##
+## InsteadOf [action args ...] [other_action other_args ...].
+##   -or--
+## InsteadOf [action args ...] [other_action other_args ...]: [Some test]
+## This will substitute other_action for this action whenever its argument match the arguments given.  IF [Some test]
+## is included, then it must also be true for the substitution to happen.
+##
+## Before [action args ...]: [optional test] stuff to do...
+## Runs stuff to do before running the action when its argument match the arguments here.  Again, you can optionally
+## include a test for something that needs to be true (something about the game state or the arguments).
+##
+## After [action args ...]: [optional test] stuff to do...
+## Same, but it runs this after performing the action rather than before (although before running Report).
+##
+
+# [look ?agent]
+# Examine the current room
+To [look ?].
+Report [look ?agent]:
+    [Location ?agent ?here]
+    [firstOf] You are in ?here/DescriptivePhrase.[else][end]  [firstOf]?here/Description[else][end]
+    [Paragraph]
+    You see [PrintList ?thing [Collocated ?thing ?agent]].
+    [AccumulateOutput [OtherSide ?door ?here ?there] [DescribeDoor ?door ?there]]
+[end]
+Failure [look ?agent]: [Not [CanSee ?agent]] It's dark. You can't see anything.
+LogicalForm [s ?agent [vp look []]] [look ?agent].
+
+# [lookIn ?agent ?container]
+# List the contents of the container
+To [lookIn ? ?].
+Report [lookIn ? ?where]: [NotAny [Location ? ?where]] [firstOf]?where/Description.[else][end] It's empty.
+Report [lookIn ? ?where]:
+    [Open ?where]
+    
+    You see [PrintList ?thing [Location ?thing ?where]].
+[end]
+Report [lookIn ? ?where]: [firstOf]?where/Description.[else][end]  It's closed.
+Report [lookIn ? ?]: Failed.
+Failure [lookIn ? ?container]: [Not [IsA ?container location]] ?container isn't a thing you can look inside of.
+Failure [lookIn ?agent ?]: [Not [CanSee ?agent]] It's dark. You can't see anything.
+LogicalForm [s ?agent [vp look [[in ?container]]]] [lookIn ?agent ?container].
+LogicalForm [s ?agent [vp look [[on ?container]]]] [lookIn ?agent ?container].
+LogicalForm [s ?agent [vp inventory []]] [lookIn ?agent ?agent].
+
+# [examine ?agent ?object]
+# Give more detail on ?object
+InsteadOf [examine ?agent ?object] [lookIn ?agent ?object]: [IsA ?object container]
+To [examine ? ?].
+Report [examine ? ?object]: [Description ?object]
+Report [examine ? ?]: Nothing unusual.
+Failure [example ?agent ?]: [Not [CanSee ?agent]]
+LogicalForm [s ?agent [vp examine ?object []]] [examine ?agent ?object]. 
+
+# [eat ?agent ?object]
+# Agent eats the object.
+To [eat ? ?object]: [Destroy ?object]
+Failure  [eat ? ?what]: [Not [IsA ?what food]] ?what is not food.
+LogicalForm [s ?agent [vp eat ?object []]] [eat ?agent ?object].
+
+# [move ?agent ?object ?container]
+# Agent moves ?object to ?container
+To [move ? ?object ?container]: [now [Location ?object ?container]]
+Failure  [move ? ? ?container]: [Not [IsA ?container location]] You can't put things in ?container.
+Failure  [move ? ? ?container]: [Closed ?container] It's closed.
+Failure  [move ? ?object ?]: [Immovable ?object] You can't put move ?object.
+LogicalForm [s ?agent [vp put ?object [[in ?dest]]]] [move ?agent ?object ?dest].
+LogicalForm [s ?agent [vp move ?object [[to ?dest]]]] [move ?agent ?object ?dest].
+LogicalForm [s ?agent [vp take ?object [["out of" ?_loc]]]] [move ?agent ?object ?here]: [Location player ?here]
+LogicalForm [s ?agent [vp take ?object [[from ?_loc]]]] [move ?agent ?object ?here]: [Location player ?here]
+LogicalForm [s ?agent [vp put ?object [[in ?loc]]]] [move ?agent ?object ?loc].
+LogicalForm [s ?agent [vp take ?object []]] [move ?agent ?object ?agent].
+LogicalForm [s ?agent [vp drop ?object []]] [move ?agent ?object ?here]: [Location ?agent ?here]
+
+# [turnOn ?agent ?device]
+# Turn the device on
+To [turnOn ? ?thing]: [now [SwitchedOn ?thing]]
+Failure  [turnOn ? ?thing]: [Not [IsA ?thing device]] It doesn't have an on/off switch.
+LogicalForm [s ?agent [vp turn [[on ?device]]]] [turnOn ?agent ?device].
+
+# [turnOff ?agent ?device]
+# Turn the device off
+To [turnOff ? ?thing]: [now [Not [SwitchedOn ?thing]]]
+Failure  [turnOff ? ?thing]: [Not [IsA ?thing device]] It doesn't have an on/off switch.
+LogicalForm [s ?agent [vp turn [[off ?device]]]] [turnOff ?agent ?device].
+
+# [open ?agent ?container]
+# Agent opens the container, making its contents available.
+To [open ? ?container]: [now [Open ?container]]
+Failure [open ? ?container]: [Not [Openable ?container]] It isn't openable.
+LogicalForm [s ?agent [vp open ?container []]] [open ?agent ?container].
+
+# [close ?agent ?container]
+# Agent closes the container
+To [close ? ?container]: [now [Not [Open ?container]]]
+Failure [open ? ?container]: [Not [Openable ?container]] It isn't openable.
+LogicalForm [s ?agent [vp close ?container []]] [close ?agent ?container].
+
+# [passThrough ?agent ?door]
+# Agent moves to the room on the other side of the door.
+To [passThrough ?agent ?door]: [Location ?agent ?here] [OtherSide ?door ?here ?destination] [now [Location ?agent ?destination]]
+Failure [passThrough ? ?door]: [Closed ?door] It's closed.
+Report [passThrough ?agent ?]: [Do [look ?agent]]
+LogicalForm [s ?agent [vp go  [[through ?door]]]] [passThrough ?agent ?door].
+
+# [stab ?agent ?target]
+To [stab ?agent ?target]: [IsA ?thing weapon] [Location ?thing ?agent] [Location ?agent ?location] [Location ?target ?location]
+LogicalForm [s ?agent [vp stab ?target []]] [stab ?agent ?target].
+After [stab ? doctor] [Write "seems like he can't die."].

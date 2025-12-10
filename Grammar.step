@@ -1,0 +1,62 @@
+###
+### SIMPLE ENGLISH GRAMMAR 
+###
+
+[predicate] 
+S declarative [s ?subject ?predicate]: [NP ?subject ?person ?number subject] [VP ?predicate ?person ?number]
+S imperative [s Addressee ?predicate]: [VP ?predicate first ?_number]
+
+[predicate]
+NP ?referent ?person ?number ?case: [Pronoun ?referent ?pronoun ?person ?number ?case] ?pronoun/Write
+NP ?name ? ? ?: [IsA ?name agent] ?name/Write
+NP [np [?det ?noun]] third ?number ?: [Det ?det] [N ?noun ?number]
+NP [np [the ?noun]] ? ?number ?: [N ?noun ?number]
+
+[predicate]
+Pronoun Speaker |I| first singular subject.
+Pronoun Speaker i first singular subject.
+Pronoun Speaker me first singular object.
+Pronoun Addressee you second singular ?.
+Pronoun here here ? ? ?.
+
+[predicate]
+Det the: the
+Det a: a
+Det a: an
+
+[predicate]
+N ?noun singular: [Noun ?noun] ?noun/Write
+N ?noun plural: [Noun ?noun] [NounSingularPlural ?noun ?plural] ?plural/Write
+
+[predicate]
+VP [vp ?verb ?pps] ?person ?number: [VI ?verb ?person ?number] [PPs ?pps]
+VP [vp ?verb ?obj ?pps] ?person ?number: [VT ?verb ?person ?number] [NP ?obj ? ? object] [PPs ?pps]
+VP [vp ?verb ?obj1 ?obj2 ?pps] ?person ?number: [VD ?verb ?person ?number] [NP ?obj1 ? ? object] [NP ?obj2 ? ? object] [PPs ?pps]
+
+[predicate]
+VI ?verb third singular: [Verb intransitive ?verb] [NounSingularPlural ?verb ?tps] ?tps/Write
+VI ?verb ? ?: [Verb intransitive ?verb] ?verb/Write
+
+[predicate]
+VT ?verb third singular: [Verb transitive ?verb] [NounSingularPlural ?verb ?tps] ?tps/Write
+VT ?verb ? ?: [Verb transitive ?verb] ?verb/Write
+
+[predicate]
+VD ?verb third singular: [Verb ditransitive ?verb] [NounSingularPlural ?verb ?tps] ?tps/Write
+VD ?verb ? ?: [Verb ditransitive ?verb] ?verb/Write
+
+[predicate]
+PPs [].
+PPs [?first | ?rest]: [PP ?first] [PPs ?rest]
+
+[predicate]
+PP [?prep ?np]: [Preposition ?prep] ?prep/Write [NP ?np ? ? object]
+
+[predicate]
+Preposition to.
+Preposition on.
+Preposition in.
+Preposition off.
+Preposition "out of".
+Preposition from.
+Preposition through.

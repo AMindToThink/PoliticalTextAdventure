@@ -1,0 +1,31 @@
+###
+### REFERRING EXPRESSIONS
+### Maps back and forth between noun phrase parse tree and the objects they refer to.
+###
+
+[predicate]
+# True if ?agent has access to ?thing.  Add rules here to allow the parser to let the user refer to things not in the room.
+Available ?thing ?agent: [Location ?agent ?place] [Illuminated ?place] [Location ?thing ?place]
+Available ?thing ?agent: [Location ?agent ?place] [Illuminated ?place] [Location ?container ?place] [Open ?container] [Location ?thing ?container]
+Available ?here ?agent: [Location ?agent ?here]
+Available ?door ?agent: [Location ?agent ?here] [OtherSide ?door ?here ?]
+Available ?thing ?agent: [Location ?thing ?agent]
+
+predicate ReferringExpression ?agent ?referent ?syntacticForm.
+ReferringExpression ? ?who ?who: [IsA ?who agent]
+ReferringExpression ? ?thing [np [the ?type]]: [Type ?thing ?type]
+ReferringExpression ?agent ?location here: [Location ?agent ?location]
+ReferringExpression ? (Var ?ref) ?object: [Type ?object ?] [= ?ref ?object]  # default rule 
+
+AvailableReferent ?agent ?agent ?agent.
+AvailableReferent ?agent (NonVar ?referent) ?expression: [ReferringExpression ?agent ?referent ?expression]
+AvailableReferent ?agent (Var ?referent) ?expression: [ReferringExpression ?agent ?referent ?expression] [Available ?referent ?agent]
+AvailableReferent ? (Var ?) ?exp: You don't see [NP ?exp ? ? object] [BailOut]
+
+ReferencesOf ?agent [?action ?re1]  [?action ?arg1]: [AvailableReferent ?agent ?arg1 ?re1]
+ReferencesOf ?agent [?action ?re1 ?re2]  [?action ?arg1 ?arg2]: [AvailableReferent ?agent ?arg1 ?re1] [AvailableReferent ?agent ?arg2 ?re2]
+ReferencesOf ?agent [?action ?re1 ?re2 ?re3]  [?action ?arg1 ?arg2 ?arg3]: [AvailableReferent ?agent ?arg1 ?re1] [AvailableReferent ?agent ?arg2 ?re2] [AvailableReferent ?agent ?arg3 ?re3]
+ReferencesOf ?agent [?action ?re1 ?re2 ?re3 ?re4]  [?action ?arg1 ?arg2 ?arg3 ?arg4]: [AvailableReferent ?agent ?arg1 ?re1] [AvailableReferent ?agent ?arg2 ?re2] [AvailableReferent ?agent ?arg3 ?re3] [AvailableReferent ?arg4 ?re4]
+ReferencesOf ?agent [?action ?re1 ?re2 ?re3 ?re4 ?re5]  [?action ?arg1 ?arg2 ?arg3 ?arg4 ?arg5]: [AvailableReferent ?agent ?arg1 ?re1] [AvailableReferent ?agent ?arg2 ?re2] [AvailableReferent ?agent ?arg3 ?re3] [AvailableReferent ?agent ?arg4 ?re4] [AvailableReferent ?agent ?arg5 ?re5]
+
+

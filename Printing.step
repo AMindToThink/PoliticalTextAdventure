@@ -1,0 +1,21 @@
+###
+### PRINTING STUFF OUT
+### Useful utilities for printing
+###
+
+# Prints a short phrase referring to ?object, that would be suitable for embedding in a sentence.
+# It should not be a full sentence.
+[fallible]
+[default] DescriptivePhrase ?thing: [Once [ReferringExpression player ?thing ?np] [NP ?np ? ? object]]
+
+# Prints a full sentence describing the object.
+[fallible] task Description ?object.
+
+# Prints a list of DescriptivePhrases for each ?item that is a solution to ?generator.
+# Separates them with commas and uses "and" at the end.
+PrintList ?item ?generator: [PrintListDriver ?generator [DescriptivePhrase ?item] "and"]
+
+PrintListDriver ?generator ?printer ?andOr: [AccumulateOutputWithSeparators ?generator ?printer "," ?andOr]
+
+[default] DescribeDoor ?door ?otherside: [Open ?door] Through ?door/DescriptivePhrase you can see ?otherside/DescriptivePhrase.
+[default] DescribeDoor ?door ?: You see ?door/DescriptivePhrase. 

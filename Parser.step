@@ -1,0 +1,33 @@
+###
+### RUNNING USER COMMANDS
+###
+
+# This gets called whenever you type something in the command window that isn't enclosed in [ ] brackets.
+[main] ProcessCommand ?words:
+    [SyntacticForm ?words ?_mood ?parse]
+    #Syntactic form: ?_mood/Write ?parse/WriteVerbatim
+
+    [LogicalForm ?parse ?lf] 
+    #Logical form: ?lf/WriteVerbatim
+
+    [ReferencesOf Addressee ?lf ?dereferenced]
+    #Dereferences: ?dereferenced/WriteVerbatim
+
+    [set Addressee = player]
+    [Do ?dereferenced]
+    [Paragraph]
+    [TickEverybody]
+[end]
+
+initially:
+    [EnvironmentOption commandProcessor ProcessCommand]
+    [set Speaker = typer]
+    [set Addressee = player]
+[end]
+
+predicate LogicalForm ?syntacticStructure ?logicalForm.
+
+[predicate]
+SyntacticForm ?words ?mood ?parse: [NonVar ?words] [Parse [S ?mood ?parse] ?words]
+SyntacticForm ?words ?mood ?parse: [Var ?words] [SaveText [S ?mood ?parse] ?words]
+SyntacticForm ?words ? ?: I don't understand: ?words [BailOut]

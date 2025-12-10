@@ -1,0 +1,21 @@
+# Draw the game world as a graph
+[main] World: [VisualizeGraph WorldRelationship node_color ConceptColor name "Game world"]
+
+[predicate]
+ConceptColor ?c lime: [KindOf ?c ?]
+ConceptColor ?c lime: [KindOf ? ?c]
+ConceptColor ?c yellow: [IsA ?c agent]
+ConceptColor ?c red: [IsA ?c room]
+ConceptColor ? white.
+
+[predicate]
+WorldRelationship ?a ?b ?predicate ?color true: [VisualizedRelation ?predicate ?color] [?predicate ?a ?b]
+[predicate]
+VisualizedRelation KindOf green.
+VisualizedRelation Type lime.
+VisualizedRelation Location red.
+VisualizedRelation DoorConnection orange.
+
+[predicate][main]
+DoorConnection ?door ?room: [Connects ?door ?room ?]
+DoorConnection ?door ?room: [Connects ?door ? ?room]

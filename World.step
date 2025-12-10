@@ -53,6 +53,10 @@ Type campaign room.
 Description campaign: Win votes, or be forgotten and ridiculed forever.
 DescriptivePhrase campaign: on the campaign trail
 
+Type debate room.
+Description debate: The lights are bright overhead. The crowd is the lowest common denominator. 
+DescriptivePhrase debate: on the stage of the Presidential Debate.
+
 Type outdoors room.
 DescriptivePhrase outdoors: outdoors
 Description outdoors: the great outdoors on a warm, sunny day.

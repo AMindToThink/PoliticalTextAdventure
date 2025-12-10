@@ -60,6 +60,8 @@ KindOf weapon thing.
 KindOf knife weapon.
 KindOf toy thing.
 
+KindOf mission thing.
+
 
 ###
 ### THINGS
@@ -135,7 +137,8 @@ fluent SwitchedOn ?device.
 
 # ?room has a lamp in it that's switched on.
 [predicate]
-[default] Illuminated ?room: [Once [Location ?thing ?room] [IsA ?thing lamp] [SwitchedOn ?thing]]
+[default] Illuminated ?_room.
+#: [Once [Location ?thing ?room] [IsA ?thing lamp] [SwitchedOn ?thing]]
 
 # ?agent is in a room with light.
 [predicate]
@@ -155,12 +158,12 @@ Destroy ?object: [Location ?object ?where] [now [Not [Location ?object ?where]]]
 [function] fluent Bleeding ?thing.
 
 [function]
-fluent Turn ?value.
-[function]
-fluent Money ?owner ?value.
+fluent PropertyHealth ?type ?owner ?value.
 
 [predicate]
 predicate TurnText ? ?.
 
 [predicate] 
 predicate WriteTurn.
+[predicate]
+predicate TurnNumber ? ?.

@@ -1,0 +1,27 @@
+[predicate]
+SituationAction ?id |1|: [SituationAction ?id 1]
+SituationAction ?id |2|: [SituationAction ?id 2]
+SituationAction ?id |3|: [SituationAction ?id 3]
+SituationAction ?id |4|: [SituationAction ?id 4]
+SituationAction 1000 1: [inc MyTurn] "Octopodes are just as intelligent as people. They can escape their tanks, use tools, and have well-developed brains. Denying them the vote is immoral"
+SituationAction 1000 2: [inc MyTurn] "Making AI smarter than humans is inherently risky. We don't understand what AI are thinking, we can't give them human values, and we are struggling to oversee them. We need to take action now!"
+SituationAction 1000 3: "Housing is a vital... uh..." Your friends look at you sadly. Ian is already yawning. Let's pick something more interesting.
+SituationAction 1000 4: [inc MyTurn] "Aging and death are the largest causes of human suffering. We all have someone we've lost. No more! Medicine has come a long way, but it can go even farther. The sooner we cure aging, the fewer of our friends we will have lost."
+# SituationAction ?id ?x: SituationAction with ?id ?x
+
+SituationAction 1001 1: [inc MyTurn] [dec Health] The baby bites you. That hurts! You now feel weaker.
+SituationAction 1001 2: [inc MyTurn] [dec Money] [dec PublicOpinion] |You hand the baby a dollar bill. "Imma spedn on druugs!" it says. The woman glares at you.|
+SituationAction 1001 3: [inc MyTurn] [set Health = Health - 2] [set Money = Money - 4] [set PublicOpinion = PublicOpinion - 3] |You don't like how the baby is looking at you, so you decide to act first. You throw a punch at its smug face. But then it catches your fist! You're in awe at the strength of this baby's hands. It twists and squeezes your hand until you find yourself on the floor. "Sorry, Sorry!" you yell. "Here, have my wallet." The baby takes your wallet and runs off. You feel ashamed and poor.|
+SituationAction 1001 4: [inc MyTurn] [dec PublicOpinion] You know that babies can be brutal demons. The baby is quite happy ignoring you as well. The mother looks hurt but leaves after a moment, with her demon in tow.
+
+# [predicate]
+# # Catch-all for situations that don't have special starting logic
+# StartSituation ?x: Situation started ?x
+
+# [predicate]
+# # Catch-all for situations that don't have special ending logic
+# EndSituation ?x: Situation ended ?x
+
+
+
+

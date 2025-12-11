@@ -3,11 +3,26 @@
 ###
 
 # This gets called whenever you type something in the command window that isn't enclosed in [ ] brackets.
-[main] ProcessCommand ?words:
+[main] 
+ProcessCommand ?: [CheckLost]
+ProcessCommand ?words:
     
     [WriteTurn]
-    [inc MyTurn]
+    # [StartSituation CurrentSituation]
 
+    [ParseAction ?words]
+    [Paragraph]
+    [TickEverybody]
+
+    Actions available:[NewLine]
+    [ForEach [ActionDescription ?action] [ActionDescription ?action]]
+
+    [NumActions CurrentSituation ?numNumberedActions]
+    Numbered Actions Available: 1 through ?numNumberedActions
+    
+[end]
+ParseAction [?word]: [SituationAction CurrentSituation ?word]
+ParseAction ?words:
     [SyntacticForm ?words ?_mood ?parse]
     #Syntactic form: ?_mood/Write ?parse/WriteVerbatim
 
@@ -19,8 +34,6 @@
 
     [set Addressee = player]
     [Do ?dereferenced]
-    [Paragraph]
-    [TickEverybody]
 [end]
 
 initially:

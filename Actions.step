@@ -51,9 +51,12 @@
 ## After [action args ...]: [optional test] stuff to do...
 ## Same, but it runs this after performing the action rather than before (although before running Report).
 ##
+[predicate]
+predicate ActionDescription ?x.
 
 # [look ?agent]
 # Examine the current room
+ActionDescription look: "look" [NewLine]
 To [look ?].
 Report [look ?agent]:
     [Location ?agent ?here]
@@ -67,6 +70,8 @@ LogicalForm [s ?agent [vp look []]] [look ?agent].
 
 # [lookIn ?agent ?container]
 # List the contents of the container
+ActionDescription lookInOne: "look in thing" [NewLine]
+ActionDescription lookInTwo: "look in location" [NewLine]
 To [lookIn ? ?].
 Report [lookIn ? ?where]: [NotAny [Location ? ?where]] [firstOf]?where/Description.[else][end] It's empty.
 Report [lookIn ? ?where]:
@@ -83,6 +88,7 @@ LogicalForm [s ?agent [vp look [[on ?container]]]] [lookIn ?agent ?container].
 LogicalForm [s ?agent [vp inventory []]] [lookIn ?agent ?agent].
 
 # [examine ?agent ?object]
+ActionDescription examine: "examine object" [NewLine]
 # Give more detail on ?object
 InsteadOf [examine ?agent ?object] [lookIn ?agent ?object]: [IsA ?object container]
 To [examine ? ?].
@@ -92,12 +98,14 @@ Failure [example ?agent ?]: [Not [CanSee ?agent]]
 LogicalForm [s ?agent [vp examine ?object []]] [examine ?agent ?object]. 
 
 # [eat ?agent ?object]
+ActionDescription eat: "eat object" [NewLine]
 # Agent eats the object.
 To [eat ? ?object]: [Destroy ?object]
 Failure  [eat ? ?what]: [Not [IsA ?what food]] ?what is not food.
 LogicalForm [s ?agent [vp eat ?object []]] [eat ?agent ?object].
 
 # [move ?agent ?object ?container]
+ActionDescription move1: "move object to dest" [NewLine]
 # Agent moves ?object to ?container
 To [move ? ?object ?container]: [now [Location ?object ?container]]
 Failure  [move ? ? ?container]: [Not [IsA ?container location]] You can't put things in ?container.
@@ -146,3 +154,11 @@ LogicalForm [s ?agent [vp go  [[through ?door]]]] [passThrough ?agent ?door].
 To [stab ?agent ?target]: [IsA ?thing weapon] [Location ?thing ?agent] [Location ?agent ?location] [Location ?target ?location]
 LogicalForm [s ?agent [vp stab ?target []]] [stab ?agent ?target].
 After [stab ? doctor] [Write "seems like he can't die."].
+
+[predicate]
+NumActions null 0.
+# Take action number
+To [1]: [< 1 2]
+After [1] [Write "Did a 1"].
+
+

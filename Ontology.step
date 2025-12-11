@@ -62,6 +62,15 @@ KindOf toy thing.
 
 KindOf mission thing.
 
+KindOf money thing.
+KindOf public thing.
+KindOf rich thing.
+KindOf health thing.
+
+Noun money.
+Noun public.
+Noun rich.
+Noun health.
 
 ###
 ### THINGS
@@ -157,8 +166,6 @@ Destroy ?object: [Location ?object ?where] [now [Not [Location ?object ?where]]]
 # STATUS EFFECTS
 [function] fluent Bleeding ?thing.
 
-[function]
-fluent PropertyHealth ?type ?owner ?value.
 
 [predicate]
 predicate TurnText ? ?.
@@ -182,3 +189,12 @@ Lost: [<= RichOpinion 0] The billionaires get together to dump a gazillion dolla
 
 [predicate]
 EndStats: Money: ^Money, Health: ^Health, PublicOpinion: ^PublicOpinion, RichOpinion: ^RichOpinion
+
+[randomly]
+predicate SituationID ?.
+
+[randomly]
+predicate RandomlySelected ?.
+
+[function]
+fluent Mission ?.

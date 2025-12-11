@@ -1,18 +1,37 @@
 [predicate]
+SituationPrecondition 1000.
+SituationPrecondition 1001.
+SituationPrecondition 1002.
+SituationPrecondition 1003.
+SituationPrecondition 1004.
+[predicate]
 SituationAction ?id |1|: [SituationAction ?id 1]
 SituationAction ?id |2|: [SituationAction ?id 2]
 SituationAction ?id |3|: [SituationAction ?id 3]
 SituationAction ?id |4|: [SituationAction ?id 4]
-SituationAction 1000 1: [inc MyTurn] "Octopodes are just as intelligent as people. They can escape their tanks, use tools, and have well-developed brains. Denying them the vote is immoral"
-SituationAction 1000 2: [inc MyTurn] "Making AI smarter than humans is inherently risky. We don't understand what AI are thinking, we can't give them human values, and we are struggling to oversee them. We need to take action now!"
+SituationAction 1000 1: [inc MyTurn] [Now [Mission octopodes]] "Octopodes are just as intelligent as people. They can escape their tanks, use tools, and have well-developed brains. Denying them the vote is immoral"
+SituationAction 1000 2: [inc MyTurn] [Now [Mission aiSafety]] "Making AI smarter than humans is inherently risky. We don't understand what AI are thinking, we can't give them human values, and we are struggling to oversee them. We need to take action now!"
 SituationAction 1000 3: "Housing is a vital... uh..." Your friends look at you sadly. Ian is already yawning. Let's pick something more interesting.
-SituationAction 1000 4: [inc MyTurn] "Aging and death are the largest causes of human suffering. We all have someone we've lost. No more! Medicine has come a long way, but it can go even farther. The sooner we cure aging, the fewer of our friends we will have lost."
+SituationAction 1000 4: [inc MyTurn] [Now [Mission aging]] "Aging and death are the largest causes of human suffering. We all have someone we've lost. No more! Medicine has come a long way, but it can go even farther. The sooner we cure aging, the fewer of our friends we will have lost."
 # SituationAction ?id ?x: SituationAction with ?id ?x
 
 SituationAction 1001 1: [inc MyTurn] [dec Health] The baby bites you. That hurts! You now feel weaker.
 SituationAction 1001 2: [inc MyTurn] [dec Money] [dec PublicOpinion] |You hand the baby a dollar bill. "Imma spedn on druugs!" it says. The woman glares at you.|
 SituationAction 1001 3: [inc MyTurn] [set Health = Health - 2] [set Money = Money - 4] [set PublicOpinion = PublicOpinion - 3] |You don't like how the baby is looking at you, so you decide to act first. You throw a punch at its smug face. But then it catches your fist! You're in awe at the strength of this baby's hands. It twists and squeezes your hand until you find yourself on the floor. "Sorry, Sorry!" you yell. "Here, have my wallet." The baby takes your wallet and runs off. You feel ashamed and poor.|
 SituationAction 1001 4: [inc MyTurn] [dec PublicOpinion] You know that babies can be brutal demons. The baby is quite happy ignoring you as well. The mother looks hurt but leaves after a moment, with her demon in tow.
+
+SituationAction 1002 1: [inc MyTurn] [set Money = Money + 5] Mr. Monopoly hands you an envelope, which you slip into your pocket.
+SituationAction 1002 2: [inc MyTurn] [set RichOpinion = RichOpinion - 3] |Mr. Monopoly shakes his head sadly. "What a naive young fool. Politics is going to eat you alive."|
+
+SituationAction 1003 1: [inc MyTurn] [inc RichOpinion] [inc PublicOpinion] Those present give you big smiles and do not seem to realize or care that they are being flattered.
+SituationAction 1003 2: [inc MyTurn] The entire audience tunes you out as you start yapping about how great your mom is. They feel a bit bad about how their mom wasn't as good, but they still find your toast sweet.
+SituationAction 1003 3: [inc MyTurn] [dec RichOpinion] [dec PublicOpinion] "What's the deal with airplane food?" you say. You realize you forgot the punchline. "It's not very good, is it?" The audience cringes.
+SituationAction 1003 4: [inc MyTurn] [dec PublicOpinion] You begin to get a reputation as a lame party pooper.
+
+SituationAction 1004 1: [inc MyTurn] [dec PublicOpinion] The crowd is bored. You feel bad for being trite.
+SituationAction 1004 2: [inc MyTurn] [inc PublicOpinion] "I'm continually surprised that I could go from a nobody to the keynote speaker in just a few Turns," you start. The crowd enjoys hearing your perspective and getting to know you.
+SituationAction 1004 3: [inc MyTurn] [dec PublicOpinion] [set Money = Money + 3] The crowd is upset, but the Gamers Lobby makes a kind donation to your campaign.
+SituationAction 1004 4: [inc MyTurn] [inc PublicOpinion] [Mission ?mission] "?mission is the defining issue of our time," you say, "and I am the person who is going to lead the charge."
 
 # [predicate]
 # # Catch-all for situations that don't have special starting logic

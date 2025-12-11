@@ -6,16 +6,18 @@
 [main] 
 ProcessCommand ?: [CheckLost]
 ProcessCommand ?words:
-    
+    [ParseAction ?words]
+    [NewLine]
+    [NewLine]
     [WriteTurn]
     # [StartSituation CurrentSituation]
 
-    [ParseAction ?words]
+    
     [Paragraph]
     [TickEverybody]
 
     Actions available:[NewLine]
-    [ForEach [ActionDescription ?action] [ActionDescription ?action]]
+    [DoAll [ActionDescription ?action]]
 
     [NumActions CurrentSituation ?numNumberedActions]
     Numbered Actions Available: 1 through ?numNumberedActions

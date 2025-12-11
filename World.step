@@ -54,7 +54,7 @@ WriteTurn: Turn ^MyTurn:[NewLine] [WriteTurnText]
 #[set NumNumberedActions = ]
 
 WriteTurnText: [TurnNumber ?sitId MyTurn] [TurnText ?sitId ?turnText] [set CurrentSituation = ?sitId] ?turnText
-WriteTurnText: [SituationID ?sid] [RandomlySelected ?sid] [TurnText ?sid ?turnText] [set CurrentSituation = ?sid] ?turnText 
+WriteTurnText: [SituationID ?sid] [RandomlySelected ?sid] [SituationPrecondition ?sid] [Different CurrentSituation ?sid] [TurnText ?sid ?turnText] [set CurrentSituation = ?sid] ?turnText 
 
 
 # Faction statuses
@@ -62,6 +62,20 @@ initially: [set Money = 10]
 initially: [set RichOpinion = 10]
 initially: [set PublicOpinion = 10]
 initially: [set Health = 10]
+Type yourMoney money.
+DescriptivePhrase money: your campaign funds
+Type yourPublic public.
+DescriptivePhrase public: the public
+Type yourHealth health.
+DescriptivePhrase health: your body
+Type yourRich rich.
+DescriptivePhrase rich: rich people
+Location yourMoney ?x: [Location player ?x]
+Location yourPublic ?x: [Location player ?x]
+Location yourHealth ?x: [Location player ?x]
+Location yourRich ?x: [Location player ?x]
+
+
 
 
 Type campaign room.
@@ -72,49 +86,10 @@ Type debate room.
 Description debate: The lights are bright overhead. The crowd is the lowest common denominator. 
 DescriptivePhrase debate: on the stage of the Presidential Debate.
 
-Type outdoors room.
-DescriptivePhrase outdoors: outdoors
-Description outdoors: the great outdoors on a warm, sunny day.
-
-Type exit door.
-Connects exit campaign outdoors.
-DescriptivePhrase exit: a sturdy wooden door
-Description exit: [Location player ?here] [OtherSide exit ?here ?there] a strong wooden door.  Through a little window in it, you see ?there
-
-KindOf box container.
-Type cardboard_box box.
-Location cardboard_box campaign.
-DescriptivePhrase cardboard_box: a grungy old amazon box
-
 Type player person.
 Location player campaign.
 Open campaign.
-Open outdoors.
 Open player.
-
-Type bruce cat.
-KindOf cat animal.
-Location bruce cardboard_box.
-DescriptivePhrase bruce: [Location bruce cardboard_box] a contented-looking ginger tabby
-DescriptivePhrase bruce: a cat in hunter-mode
-Tick bruce: [Collocated bruce benji] the cat chases the mouse around the room.  [MaybeBreakLamp]
-Tick bruce: [Location bruce ?container] [IsA ?container box] [Not [Open ?container]] annoyed meowing comes from ?container.
-Tick bruce: [Collocated bruce ?box] [IsA ?box box] [Open ?box] [now [Location bruce ?box]] The cat jumps in the box.
-After [open ? ?container] [Escape]: [Location bruce ?container]
-Escape: the cat jumps out of the box.  [Location ?bruce ?container] [Location ?container ?room] [now [Location ?bruce ?room]]
-
-[randomly]
-MaybeBreakLamp: The cat knocks over the lamp.  The room is plunged into darkness.  [now [Not [SwitchedOn theLamp]]]
-[3] MaybeBreakLamp.
-
-Type benji mouse.
-KindOf mouse animal.
-Location benji campaign.
-DescriptivePhrase benji: [Collocated benji bruce] a nervous-looking mouse
-DescriptivePhrase benji: a sleeping mouse
-Tick benji: [Location benji ?where] [OtherSide ?door ?where outdoors] [Open ?door] [now [Location benji outdoors]] The mouse runs out the door.
-Tick benji: [Collocated benji bruce] the mouse squeeks in terror.
-Failure [move ? benji ?]: The mouse bites your hand.
 
 Type theLamp lamp.
 Location theLamp campaign.
@@ -122,42 +97,9 @@ SwitchedOn theLamp.
 DescriptivePhrase theLamp: a floor lamp
 Description theLamp: it's a midcentury modern floor lamp in a bizarre shade of chartreuse.
 
-Type doctor person.
-Location doctor campaign.
-DescriptivePhrase doctor: a creepy-looking plague doctor.
-Description doctor: he has a weird beak and everything
-Murderousness doctor low.
-After [examine player doctor] [Now [Murderousness doctor high]]: [Murderousness doctor low] 
-After [examine player doctor] [Begin [Now [Location player "the outer dark"]] [Write "The doctor casts a spell on you and you die."]]: [Murderousness doctor high]
-
-Now ?call: [now ?call]
-
-Type myCookie cookie.
-Location myCookie campaign.
-DescriptivePhrase myCookie: a cookie which says 'eat me'
-Description myCookie: it smells pretty good
-After [eat player myCookie] [Write "You broke your diet. Shame on you."].
-
-Type myKnife knife.
-Location myKnife campaign.
-DescriptivePhrase myKnife: a sharp-looking knife
-Description myKnife: [now [Bleeding player]] you slice your finger while examining the knife.
-Tick player: [Bleeding player] you bleed some more
-
-Type scarytoy toy.
-Location scarytoy campaign.
-Murderousness scarytoy high.
-KindOf scarytoy container.
-DescriptivePhrase scarytoy: a scary-looking toy
-Description scarytoy: he has a scar over his eye. I don't think cats want to mess with him.
-Failure [stab player scarytoy]: [Begin [Now [Location myKnife scarytoy]] [Write "the scary toy takes your knife"]].
-
-Type unity gameEngine.
-Location unity campaign.
-DescriptivePhrase unity: the once-beloved Unity game engine that lost favor due to a pricing fiasco
-Description unity: you can still hear it calling to you to make more video games. Maybe one day you'll answer.
-
-
-# Elements added: doctor, myCookie, myKnife, scarytoy, unity
+Type theFuture future.
+Location theFuture campaign.
+DescriptivePhrase theFuture: a bright future in politics ahead of you
+Description theFuture: Maybe you can finally change things up in Washington
 
 Now ?call: [now ?call]

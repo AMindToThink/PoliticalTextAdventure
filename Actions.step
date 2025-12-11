@@ -68,62 +68,62 @@ Report [look ?agent]:
 Failure [look ?agent]: [Not [CanSee ?agent]] It's dark. You can't see anything.
 LogicalForm [s ?agent [vp look []]] [look ?agent].
 
-# [lookIn ?agent ?container]
-# List the contents of the container
-ActionDescription lookInOne: "look in thing" [NewLine]
-ActionDescription lookInTwo: "look in location" [NewLine]
-To [lookIn ? ?].
-Report [lookIn ? ?where]: [NotAny [Location ? ?where]] [firstOf]?where/Description.[else][end] It's empty.
-Report [lookIn ? ?where]:
-    [Open ?where]
+# # [lookIn ?agent ?container]
+# # List the contents of the container
+# ActionDescription lookInOne: "look in thing" [NewLine]
+# ActionDescription lookInTwo: "look in location" [NewLine]
+# To [lookIn ? ?].
+# Report [lookIn ? ?where]: [NotAny [Location ? ?where]] [firstOf]?where/Description.[else][end] It's empty.
+# Report [lookIn ? ?where]:
+#     [Open ?where]
     
-    You see [PrintList ?thing [Location ?thing ?where]].
-[end]
-Report [lookIn ? ?where]: [firstOf]?where/Description.[else][end]  It's closed.
-Report [lookIn ? ?]: Failed.
-Failure [lookIn ? ?container]: [Not [IsA ?container location]] ?container isn't a thing you can look inside of.
-Failure [lookIn ?agent ?]: [Not [CanSee ?agent]] It's dark. You can't see anything.
-LogicalForm [s ?agent [vp look [[in ?container]]]] [lookIn ?agent ?container].
-LogicalForm [s ?agent [vp look [[on ?container]]]] [lookIn ?agent ?container].
-LogicalForm [s ?agent [vp inventory []]] [lookIn ?agent ?agent].
+#     You see [PrintList ?thing [Location ?thing ?where]].
+# [end]
+# Report [lookIn ? ?where]: [firstOf]?where/Description.[else][end]  It's closed.
+# Report [lookIn ? ?]: Failed.
+# Failure [lookIn ? ?container]: [Not [IsA ?container location]] ?container isn't a thing you can look inside of.
+# Failure [lookIn ?agent ?]: [Not [CanSee ?agent]] It's dark. You can't see anything.
+# LogicalForm [s ?agent [vp look [[in ?container]]]] [lookIn ?agent ?container].
+# LogicalForm [s ?agent [vp look [[on ?container]]]] [lookIn ?agent ?container].
+# LogicalForm [s ?agent [vp inventory []]] [lookIn ?agent ?agent].
 
-# [examine ?agent ?object]
-ActionDescription examine: "examine object" [NewLine]
-# Give more detail on ?object
-InsteadOf [examine ?agent ?object] [lookIn ?agent ?object]: [IsA ?object container]
-To [examine ? ?].
-Report [examine ? ?object]: [Description ?object]
-Report [examine ? ?]: Nothing unusual.
-Failure [example ?agent ?]: [Not [CanSee ?agent]]
-LogicalForm [s ?agent [vp examine ?object []]] [examine ?agent ?object]. 
+# # [examine ?agent ?object]
+# ActionDescription examine: "examine object" [NewLine]
+# # Give more detail on ?object
+# InsteadOf [examine ?agent ?object] [lookIn ?agent ?object]: [IsA ?object container]
+# To [examine ? ?].
+# Report [examine ? ?object]: [Description ?object]
+# Report [examine ? ?]: Nothing unusual.
+# Failure [example ?agent ?]: [Not [CanSee ?agent]]
+# LogicalForm [s ?agent [vp examine ?object []]] [examine ?agent ?object]. 
 
-# [eat ?agent ?object]
-ActionDescription eat: "eat object" [NewLine]
-# Agent eats the object.
-To [eat ? ?object]: [Destroy ?object]
-Failure  [eat ? ?what]: [Not [IsA ?what food]] ?what is not food.
-LogicalForm [s ?agent [vp eat ?object []]] [eat ?agent ?object].
+# # [eat ?agent ?object]
+# ActionDescription eat: "eat object" [NewLine]
+# # Agent eats the object.
+# To [eat ? ?object]: [Destroy ?object]
+# Failure  [eat ? ?what]: [Not [IsA ?what food]] ?what is not food.
+# LogicalForm [s ?agent [vp eat ?object []]] [eat ?agent ?object].
 
-# [move ?agent ?object ?container]
-ActionDescription move1: "move object to dest" [NewLine]
-# Agent moves ?object to ?container
-To [move ? ?object ?container]: [now [Location ?object ?container]]
-Failure  [move ? ? ?container]: [Not [IsA ?container location]] You can't put things in ?container.
-Failure  [move ? ? ?container]: [Closed ?container] It's closed.
-Failure  [move ? ?object ?]: [Immovable ?object] You can't put move ?object.
-LogicalForm [s ?agent [vp put ?object [[in ?dest]]]] [move ?agent ?object ?dest].
-LogicalForm [s ?agent [vp move ?object [[to ?dest]]]] [move ?agent ?object ?dest].
-LogicalForm [s ?agent [vp take ?object [["out of" ?_loc]]]] [move ?agent ?object ?here]: [Location player ?here]
-LogicalForm [s ?agent [vp take ?object [[from ?_loc]]]] [move ?agent ?object ?here]: [Location player ?here]
-LogicalForm [s ?agent [vp put ?object [[in ?loc]]]] [move ?agent ?object ?loc].
-LogicalForm [s ?agent [vp take ?object []]] [move ?agent ?object ?agent].
-LogicalForm [s ?agent [vp drop ?object []]] [move ?agent ?object ?here]: [Location ?agent ?here]
+# # [move ?agent ?object ?container]
+# ActionDescription move1: "move object to dest" [NewLine]
+# # Agent moves ?object to ?container
+# To [move ? ?object ?container]: [now [Location ?object ?container]]
+# Failure  [move ? ? ?container]: [Not [IsA ?container location]] You can't put things in ?container.
+# Failure  [move ? ? ?container]: [Closed ?container] It's closed.
+# Failure  [move ? ?object ?]: [Immovable ?object] You can't put move ?object.
+# LogicalForm [s ?agent [vp put ?object [[in ?dest]]]] [move ?agent ?object ?dest].
+# LogicalForm [s ?agent [vp move ?object [[to ?dest]]]] [move ?agent ?object ?dest].
+# LogicalForm [s ?agent [vp take ?object [["out of" ?_loc]]]] [move ?agent ?object ?here]: [Location player ?here]
+# LogicalForm [s ?agent [vp take ?object [[from ?_loc]]]] [move ?agent ?object ?here]: [Location player ?here]
+# LogicalForm [s ?agent [vp put ?object [[in ?loc]]]] [move ?agent ?object ?loc].
+# LogicalForm [s ?agent [vp take ?object []]] [move ?agent ?object ?agent].
+# LogicalForm [s ?agent [vp drop ?object []]] [move ?agent ?object ?here]: [Location ?agent ?here]
 
-# [turnOn ?agent ?device]
-# Turn the device on
-To [turnOn ? ?thing]: [now [SwitchedOn ?thing]]
-Failure  [turnOn ? ?thing]: [Not [IsA ?thing device]] It doesn't have an on/off switch.
-LogicalForm [s ?agent [vp turn [[on ?device]]]] [turnOn ?agent ?device].
+# # [turnOn ?agent ?device]
+# # Turn the device on
+# To [turnOn ? ?thing]: [now [SwitchedOn ?thing]]
+# Failure  [turnOn ? ?thing]: [Not [IsA ?thing device]] It doesn't have an on/off switch.
+# LogicalForm [s ?agent [vp turn [[on ?device]]]] [turnOn ?agent ?device].
 
 # [turnOff ?agent ?device]
 # Turn the device off
@@ -131,34 +131,46 @@ To [turnOff ? ?thing]: [now [Not [SwitchedOn ?thing]]]
 Failure  [turnOff ? ?thing]: [Not [IsA ?thing device]] It doesn't have an on/off switch.
 LogicalForm [s ?agent [vp turn [[off ?device]]]] [turnOff ?agent ?device].
 
-# [open ?agent ?container]
-# Agent opens the container, making its contents available.
-To [open ? ?container]: [now [Open ?container]]
-Failure [open ? ?container]: [Not [Openable ?container]] It isn't openable.
-LogicalForm [s ?agent [vp open ?container []]] [open ?agent ?container].
+# # [open ?agent ?container]
+# # Agent opens the container, making its contents available.
+# To [open ? ?container]: [now [Open ?container]]
+# Failure [open ? ?container]: [Not [Openable ?container]] It isn't openable.
+# LogicalForm [s ?agent [vp open ?container []]] [open ?agent ?container].
 
-# [close ?agent ?container]
-# Agent closes the container
-To [close ? ?container]: [now [Not [Open ?container]]]
-Failure [open ? ?container]: [Not [Openable ?container]] It isn't openable.
-LogicalForm [s ?agent [vp close ?container []]] [close ?agent ?container].
+# # [close ?agent ?container]
+# # Agent closes the container
+# To [close ? ?container]: [now [Not [Open ?container]]]
+# Failure [open ? ?container]: [Not [Openable ?container]] It isn't openable.
+# LogicalForm [s ?agent [vp close ?container []]] [close ?agent ?container].
 
-# [passThrough ?agent ?door]
-# Agent moves to the room on the other side of the door.
-To [passThrough ?agent ?door]: [Location ?agent ?here] [OtherSide ?door ?here ?destination] [now [Location ?agent ?destination]]
-Failure [passThrough ? ?door]: [Closed ?door] It's closed.
-Report [passThrough ?agent ?]: [Do [look ?agent]]
-LogicalForm [s ?agent [vp go  [[through ?door]]]] [passThrough ?agent ?door].
+# # [passThrough ?agent ?door]
+# # Agent moves to the room on the other side of the door.
+# To [passThrough ?agent ?door]: [Location ?agent ?here] [OtherSide ?door ?here ?destination] [now [Location ?agent ?destination]]
+# Failure [passThrough ? ?door]: [Closed ?door] It's closed.
+# Report [passThrough ?agent ?]: [Do [look ?agent]]
+# LogicalForm [s ?agent [vp go  [[through ?door]]]] [passThrough ?agent ?door].
 
-# [stab ?agent ?target]
-To [stab ?agent ?target]: [IsA ?thing weapon] [Location ?thing ?agent] [Location ?agent ?location] [Location ?target ?location]
-LogicalForm [s ?agent [vp stab ?target []]] [stab ?agent ?target].
-After [stab ? doctor] [Write "seems like he can't die."].
+# # [stab ?agent ?target]
+# To [stab ?agent ?target]: [IsA ?thing weapon] [Location ?thing ?agent] [Location ?agent ?location] [Location ?target ?location]
+# LogicalForm [s ?agent [vp stab ?target []]] [stab ?agent ?target].
+# After [stab ? doctor] [Write "seems like he can't die."].
+
+# [poll ?agent ?target]
+ActionDescription poll: "poll money/rich/public/health"
+To [poll ? ?].
+Report [poll ? yourMoney]: You look in your account and find out you have $^Money.
+Report [poll ? yourHealth]: You consider your health and find that it is ^Health out of 10.
+Report [poll ? yourRich]: [dec Money] [Gaussian RichOpinion 2 ?estimate] You pay up to invite some rich people to a fancy restaurant. [OpinionText "the rich" ?estimate]
+Report [poll ? yourPublic]: [dec Money] [Gaussian PublicOpinion 3 ?estimate] You pay up to hire some pollsters. [OpinionText "the public" ?estimate] 
+LogicalForm [s ?agent [vp poll ?target []]] [poll ?agent ?target].
+# After [poll ?agent ?target] [Write polled ?target].
+
+[predicate]
+OpinionText ?who ?amount: [< 10 ?amount] ?who seem to like you a lot.
+OpinionText ?who ?amount: [< 5 ?amount] ?who seem to like you decently well.
+OpinionText ?who ?amount: ?who seem to dislike you.
 
 [predicate]
 NumActions null 0.
-# Take action number
-To [1]: [< 1 2]
-After [1] [Write "Did a 1"].
 
 

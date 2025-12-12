@@ -43,36 +43,6 @@
 ##    Tick internal_name: stuff to do after every command...
 ## If you want it to run actions from Actions.step, you can do that by saying [Do [action args...]].
 ##
-[main]
-AfterProjectLoad true: [AfterProjectLoad false]
-AfterProjectLoad false: [SetSituation] Type `look` to continue
-
-initially: [set MyTurn = 0]
-initially: [set CurrentSituation = null]
-# initially: [set NumNumberedActions = 0]
-WriteTurn: Turn ^MyTurn:[NewLine] [WriteTurnText] 
-#[set NumNumberedActions = ]
-
-WriteTurnText: [TurnText CurrentSituation ?turnText] ?turnText
-
-
-# Faction statuses
-initially: [set Money = 10]
-initially: [set RichOpinion = 10]
-initially: [set PublicOpinion = 10]
-initially: [set Health = 10]
-Type yourMoney money.
-DescriptivePhrase money: your campaign funds
-Type yourPublic public.
-DescriptivePhrase public: the public
-Type yourHealth health.
-DescriptivePhrase health: your body
-Type yourRich rich.
-DescriptivePhrase rich: rich people
-Location yourMoney ?x: [Location player ?x]
-Location yourPublic ?x: [Location player ?x]
-Location yourHealth ?x: [Location player ?x]
-Location yourRich ?x: [Location player ?x]
 
 
 

@@ -1,5 +1,7 @@
 [predicate]
+# If there's a hard-coded situation for this turn number, use that
 SetSituation: [TurnNumber ?sitId MyTurn] [set CurrentSituation = ?sitId]
+# If there's no hard-coded situation for this turn number, get a random one which is different from the previous one.
 SetSituation: [SituationID ?sid] [RandomlySelected ?sid] [SituationPrecondition ?sid] [Different CurrentSituation ?sid] [set CurrentSituation = ?sid]
 [predicate]
 SituationPrecondition 1000.

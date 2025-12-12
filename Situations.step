@@ -11,6 +11,7 @@ SituationPrecondition 1003.
 SituationPrecondition 1004.
 SituationPrecondition 1005: [Owe player mrMonopoly]
 SituationPrecondition 1006.
+SituationPrecondition 1007.
 [predicate]
 SituationAction ?id |1|: [SituationAction ?id 1]
 SituationAction ?id |2|: [SituationAction ?id 2]
@@ -48,6 +49,11 @@ SituationAction 1005 3: [inc MyTurn] [set PublicOpinion = PublicOpinion - 5] [se
 SituationAction 1005 4: [inc MyTurn] [set PublicOpinion = PublicOpinion + 5] [set RichOpinion = RichOpinion + 1] [set Health = Health - 2] [Now [Not [Owe player mrMonopoly]]] You grin, "I challenge you to a dance-off! The upstart politician vs the powerful capitalist." Mr. Monopoly smirks, then starts laughing. "You think you can rule an international conglomerate without grace, poise, or skill? My moves will make you weep." Your friend gets a video camera. You give it your all. Breakdancing, hop-hop, figure-skating. Mr. Monopoly drinks his soda while spinning on his head. You feel exhausted. Mr. Monopoly has you beat, but you win his respect. The video gets millions of views. The public loves that you challenged Mr. Monopoly to a dance-off.
 
 SituationAction 1006 1: [inc MyTurn] You continue playing the game of politics.
+
+SituationAction 1007 1: [inc MyTurn] [set Money = Money - 5] [Now [Friend player sterling]] Sterling Kalogeras shows up. He tries to fix it, but makes everything worse. You pay a mechanic extra to undo Sterling's damage. But at least you have Sterling on your side now.
+SituationAction 1007 2: [inc MyTurn] [set Money = Money - 1] [set PublicOpinion = PublicOpinion - 3] The police tow the bus. They find your alcohol stash, and it becomes a scandal that you or your driver may have been drinking. You of course buy more alcohol, because can't not have alcohol, right?
+SituationAction 1007 3: [inc MyTurn] [set Health = Health - 3] [set Money = Money - 2] [dec PublicOpinion] Your screams attract the large predatory bird, Melvin, which haunts Radiator Springs. It picks up the entire bus, eats your driver, and drops the bus. Somehow, that fixes the problem with the bus, and you can drive away.
+SituationAction 1007 4: [inc MyTurn] [set Money = Money + 4] [set RichOpinion = RichOpinion - 3] You spot a nice Ferrari (just like in Cars 2). Using your expert carjacking skills (it was unlocked with the keys in the ignition), you manage to drive away in it. You made the owner very unhappy.
 # [predicate]
 # # Catch-all for situations that don't have special starting logic
 # StartSituation ?x: Situation started ?x

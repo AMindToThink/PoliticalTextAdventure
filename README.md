@@ -51,6 +51,7 @@ The number-based actions makes sense for this simple demo, but the possible acti
 
 This game was built on top of Professor Horswill's TextAdventure example game.
 Thank you to Mom for suggesting the Keynote Speaker Situation and Dad for playtesting :)
+Thank you to Sterling Kalogeras for writing situation 1007 with me :)
 
 # Todo:
 

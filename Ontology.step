@@ -187,3 +187,5 @@ predicate RandomlySelected ?.
 [function]
 fluent Mission ?.
 
+[predicate]
+fluent Owe ? ?.

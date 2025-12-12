@@ -6,9 +6,11 @@ SetSituation: [SituationID ?sid] [RandomlySelected ?sid] [SituationPrecondition 
 [predicate]
 SituationPrecondition 1000.
 SituationPrecondition 1001.
-SituationPrecondition 1002.
+SituationPrecondition 1002: [Not [Owe player mrMonopoly]]
 SituationPrecondition 1003.
 SituationPrecondition 1004.
+SituationPrecondition 1005: [Owe player mrMonopoly]
+SituationPrecondition 1006.
 [predicate]
 SituationAction ?id |1|: [SituationAction ?id 1]
 SituationAction ?id |2|: [SituationAction ?id 2]
@@ -25,7 +27,7 @@ SituationAction 1001 2: [inc MyTurn] [dec Money] [dec PublicOpinion] |You hand t
 SituationAction 1001 3: [inc MyTurn] [set Health = Health - 2] [set Money = Money - 4] [set PublicOpinion = PublicOpinion - 3] |You don't like how the baby is looking at you, so you decide to act first. You throw a punch at its smug face. But then it catches your fist! You're in awe at the strength of this baby's hands. It twists and squeezes your hand until you find yourself on the floor. "Sorry, Sorry!" you yell. "Here, have my wallet." The baby takes your wallet and runs off. You feel ashamed and poor.|
 SituationAction 1001 4: [inc MyTurn] [dec PublicOpinion] You know that babies can be brutal demons. The baby is quite happy ignoring you as well. The mother looks hurt but leaves after a moment, with her demon in tow.
 
-SituationAction 1002 1: [inc MyTurn] [set Money = Money + 5] Mr. Monopoly hands you an envelope, which you slip into your pocket.
+SituationAction 1002 1: [inc MyTurn] [set Money = Money + 5] [Now [Owe player mrMonopoly]] Mr. Monopoly hands you an envelope, which you slip into your pocket.
 SituationAction 1002 2: [inc MyTurn] [set RichOpinion = RichOpinion - 3] |Mr. Monopoly shakes his head sadly. "What a naive young fool. Politics is going to eat you alive."|
 
 SituationAction 1003 1: [inc MyTurn] [inc RichOpinion] [inc PublicOpinion] Those present give you big smiles and do not seem to realize or care that they are being flattered.
@@ -38,6 +40,14 @@ SituationAction 1004 2: [inc MyTurn] [inc PublicOpinion] "I'm continually surpri
 SituationAction 1004 3: [inc MyTurn] [dec PublicOpinion] [set Money = Money + 3] The crowd is upset, but the Gamers Lobby makes a kind donation to your campaign.
 SituationAction 1004 4: [inc MyTurn] [inc PublicOpinion] [Mission ?mission] "?mission is the defining issue of our time," you say, "and I am the person who is going to lead the charge."
 
+# Todo: randomize the name of the cola drink
+SituationAction 1005 1: [inc MyTurn] [set PublicOpinion = PublicOpinion - 2] [set RichOpinion = RichOpinion + 4] [Now [Not [Owe player mrMonopoly]]] You take a big sip of Diet Fun Fun Sparkle Cola Beverage onstage and give a big sigh. The public rolls their eyes, but Mr. Monopoly gives you a big thumbs-up.
+SituationAction 1005 2: [inc MyTurn] [set PublicOpinion = PublicOpinion + 2] [set RichOpinion = RichOpinion + 2] [Now [Not [Owe player mrMonopoly]]] At the next campaign event, you ask the crowd, "How can Americans complain about food prices when Diet Fun Fun Sparkle Cola Beverage is only $5.99?" The crowd laughs. Mr. Monopoly doesn't understand the joke, but he's still happy.
+# If you refuse, you still 'owe' Mr. Monopoly
+SituationAction 1005 3: [inc MyTurn] [set PublicOpinion = PublicOpinion - 5] [set RichOpinion = RichOpinion - 6] [set Health = Health + 4] "No, I'm no sellout!" you proclaim. "Ah, but I already know you are a sellout. I guess we'll find out what the public thinks when they find out you took a bri—offer from me." It might sink your campaign, but it really feels great to get one over on Mr. Monopoly.
+SituationAction 1005 4: [inc MyTurn] [set PublicOpinion = PublicOpinion + 5] [set RichOpinion = RichOpinion + 1] [set Health = Health - 2] [Now [Not [Owe player mrMonopoly]]] You grin, "I challenge you to a dance-off! The upstart politician vs the powerful capitalist." Mr. Monopoly smirks, then starts laughing. "You think you can rule an international conglomerate without grace, poise, or skill? My moves will make you weep." Your friend gets a video camera. You give it your all. Breakdancing, hop-hop, figure-skating. Mr. Monopoly drinks his soda while spinning on his head. You feel exhausted. Mr. Monopoly has you beat, but you win his respect. The video gets millions of views. The public loves that you challenged Mr. Monopoly to a dance-off.
+
+SituationAction 1006 1: [inc MyTurn] You continue playing the game of politics.
 # [predicate]
 # # Catch-all for situations that don't have special starting logic
 # StartSituation ?x: Situation started ?x

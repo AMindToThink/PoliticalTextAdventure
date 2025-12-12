@@ -189,3 +189,6 @@ fluent Mission ?.
 
 [predicate]
 fluent Owe ? ?.
+
+[predicate]
+fluent Friend ? ?.

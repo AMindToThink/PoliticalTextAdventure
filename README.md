@@ -19,7 +19,7 @@ Pick numbered actions to respond to situations.
 
 # How it uses Declarative Programming
 
-STEP is an inherently declarative language. Rather than `if` statements, there are multiple methods, and if one fails STEP tries the other. This made writing all of the SituationActions (in `Situations.step`) much easier than it otherwise would have been. I could easily describe what declarative facts change when an action is taken, for example which actions increment the turn counter.
+STEP is an inherently declarative language. Rather than `if` statements, there are multiple methods, and if one fails STEP tries the other. This made writing all of the SituationActions (in `Situations.step`) much easier than it otherwise would have been. I could easily describe preconditions and what declarative facts change when an action is taken. For instance, the Mr. Monopoly debt collection (SituationID 1005) only starts if you don't owe Mr. Monopoly. You begin to owe Mr. Monopoly when you take his bribe. Most of the actions you can take during debt collection repay your debt, but not all of them.
 
 # New Code for This Project
 
@@ -54,4 +54,4 @@ Thank you to Mom for suggesting the Keynote Speaker Situation and Dad for playte
 
 # Todo:
 
-[SetSituation] should be associated with each SituationAction. Right now, it always changes unless there `MyTurn` is associated with a specific Situation. `ParseAction [?word]`.
+[SetSituation] should be associated with each SituationAction. Right now, selecting a numerical choice always changes the situation unless there is a Turn associated with the Situation. That means that it currently is not possible to write a SituationAction that doesn't have a particular Turn associated with it but that has actions which do not move to the next situation. This bug is in `ParseAction [?word]`.

@@ -12,9 +12,10 @@ WriteTurnText: [TurnText CurrentSituation ?turnText] ?turnText
 
 
 # Faction statuses
-initially: [set Money = 10]
-initially: [set RichOpinion = 10]
-initially: [set PublicOpinion = 10]
+initially: [Gaussian 10 1.5 ?randomMoney] [set Money = ?randomMoney]
+initially: [Gaussian 10 1.5 ?random] [set RichOpinion = ?random]
+initially: [Gaussian 10 1.5 ?random] [set PublicOpinion = ?random]
+# Health can stay deterministic
 initially: [set Health = 10]
 Type yourMoney money.
 DescriptivePhrase money: your campaign funds

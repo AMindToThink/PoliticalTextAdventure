@@ -16,10 +16,10 @@ SituationAction ?id |1|: [SituationAction ?id 1]
 SituationAction ?id |2|: [SituationAction ?id 2]
 SituationAction ?id |3|: [SituationAction ?id 3]
 SituationAction ?id |4|: [SituationAction ?id 4]
-SituationAction 1000 1: [inc MyTurn] [Now [Mission octopodes]] "Octopodes are just as intelligent as people. They can escape their tanks, use tools, and have well-developed brains. Denying them the vote is immoral"
-SituationAction 1000 2: [inc MyTurn] [Now [Mission aiSafety]] "Making AI smarter than humans is inherently risky. We don't understand what AI are thinking, we can't give them human values, and we are struggling to oversee them. We need to take action now!"
-SituationAction 1000 3: "Housing is a vital... uh..." Your friends look at you sadly. Ian is already yawning. Let's pick something more interesting.
-SituationAction 1000 4: [inc MyTurn] [Now [Mission aging]] "Aging and death are the largest causes of human suffering. We all have someone we've lost. No more! Medicine has come a long way, but it can go even farther. The sooner we cure aging, the fewer of our friends we will have lost."
+SituationAction 1000 1: [inc MyTurn] [Now [Mission octopodes]] "Octopodes are just as intelligent as people. They can escape their tanks, use tools, and have well-developed brains. Denying them the vote is immoral." Your video goes viral, and a huge number of people demand you run as a political candidate. Looks like you're a politician, now.
+SituationAction 1000 2: [inc MyTurn] [Now [Mission aiSafety]] "Making AI smarter than humans is inherently risky. We don't understand what AI are thinking, we can't give them human values, and we are struggling to oversee them. We need to take action now!" Your video goes viral, and a huge number of people demand you run as a political candidate. Looks like you're a politician, now.
+SituationAction 1000 3: "Housing is a vital... uh..." Your friends look at you sadly. Ian is already yawning. Let's pick something more interesting. 
+SituationAction 1000 4: [inc MyTurn] [Now [Mission aging]] "Aging and death are the largest causes of human suffering. We all have someone we've lost. No more! Medicine has come a long way, but it can go even farther. The sooner we cure aging, the fewer of our friends we will have lost." Your video goes viral, and a huge number of people demand you run as a political candidate. Looks like you're a politician, now.
 # SituationAction ?id ?x: SituationAction with ?id ?x
 
 SituationAction 1001 1: [inc MyTurn] [dec Health] The baby bites you. That hurts! You now feel weaker.

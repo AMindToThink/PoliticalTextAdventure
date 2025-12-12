@@ -19,7 +19,7 @@ Pick numbered actions to respond to situations.
 
 # How it uses Declarative Programming
 
-STEP is an inherently declarative language. Rather than `if` statements, this game provides multiple methods, and if one fails it tries the other. This made writing all of the SituationActions (in `Situations.step`) much easier than it otherwise would have been. I could easily describe what declarative facts change when an action is taken, for example which actions increment the turn counter.
+STEP is an inherently declarative language. Rather than `if` statements, there are multiple methods, and if one fails STEP tries the other. This made writing all of the SituationActions (in `Situations.step`) much easier than it otherwise would have been. I could easily describe what declarative facts change when an action is taken, for example which actions increment the turn counter.
 
 # New Code for This Project
 

@@ -1,0 +1,11 @@
+[predicate]
+CheckLost: [Lost] [NewLine] [EndStats]
+
+[predicate]
+Lost: [<= Money 0] You ran out of money and had to call off the campaign. You now live as a beggar on the streets.
+Lost: [<= Health 0] You ran out of health. While you were talking with supporters, you had a heart attack. The doctors couldn't save you. Maybe future generations will take up your cause.
+Lost: [<= PublicOpinion 0] After repeated blunders, your last supporters leave you. It isn't even funny to make memes about you anymore, just sad. You go back to your regular life.
+Lost: [<= RichOpinion 0] The billionaires get together to dump a gazillion dollars on your opponents. The attack ads are brutal. They even dug up that picture of you from high school. To end the onslaught, you leave the race.
+
+[predicate]
+EndStats: Money: ^Money, Health: ^Health, PublicOpinion: ^PublicOpinion, RichOpinion: ^RichOpinion

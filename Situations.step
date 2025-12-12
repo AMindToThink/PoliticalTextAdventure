@@ -1,4 +1,7 @@
 [predicate]
+SetSituation: [TurnNumber ?sitId MyTurn] [set CurrentSituation = ?sitId]
+SetSituation: [SituationID ?sid] [RandomlySelected ?sid] [SituationPrecondition ?sid] [Different CurrentSituation ?sid] [set CurrentSituation = ?sid]
+[predicate]
 SituationPrecondition 1000.
 SituationPrecondition 1001.
 SituationPrecondition 1002.

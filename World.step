@@ -45,7 +45,7 @@
 ##
 [main]
 AfterProjectLoad true: [AfterProjectLoad false]
-AfterProjectLoad false: Type `look` to continue
+AfterProjectLoad false: [SetSituation] Type `look` to continue
 
 initially: [set MyTurn = 0]
 initially: [set CurrentSituation = null]
@@ -53,8 +53,7 @@ initially: [set CurrentSituation = null]
 WriteTurn: Turn ^MyTurn:[NewLine] [WriteTurnText] 
 #[set NumNumberedActions = ]
 
-WriteTurnText: [TurnNumber ?sitId MyTurn] [TurnText ?sitId ?turnText] [set CurrentSituation = ?sitId] ?turnText
-WriteTurnText: [SituationID ?sid] [RandomlySelected ?sid] [SituationPrecondition ?sid] [Different CurrentSituation ?sid] [TurnText ?sid ?turnText] [set CurrentSituation = ?sid] ?turnText 
+WriteTurnText: [TurnText CurrentSituation ?turnText] ?turnText
 
 
 # Faction statuses

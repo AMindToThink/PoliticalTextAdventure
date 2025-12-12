@@ -168,7 +168,7 @@ LogicalForm [s ?agent [vp poll ?target []]] [poll ?agent ?target].
 [predicate]
 OpinionText ?who ?amount: [< 10 ?amount] ?who seem to like you a lot.
 OpinionText ?who ?amount: [< 5 ?amount] ?who seem to like you decently well.
-OpinionText ?who ?amount: ?who seem to dislike you.
+OpinionText ?who ?: ?who seem to dislike you.
 
 [predicate]
 NumActions null 0.

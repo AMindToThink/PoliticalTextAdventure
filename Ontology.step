@@ -157,14 +157,14 @@ fluent SwitchedOn ?device.
 ### DESTRUCTION
 ###
 
-# Remove ?object from the game
-Destroy ?object: [Location ?object ?where] [now [Not [Location ?object ?where]]]  # object is not nowhere
+# # Remove ?object from the game
+# Destroy ?object: [Location ?object ?where] [now [Not [Location ?object ?where]]]  # object is not nowhere
 
-# EMOTIONS
-[function] fluent Murderousness ?thing ?extent.
+# # EMOTIONS
+# [function] fluent Murderousness ?thing ?extent.
 
-# STATUS EFFECTS
-[function] fluent Bleeding ?thing.
+# # STATUS EFFECTS
+# [function] fluent Bleeding ?thing.
 
 
 [predicate]
@@ -198,3 +198,4 @@ predicate RandomlySelected ?.
 
 [function]
 fluent Mission ?.
+

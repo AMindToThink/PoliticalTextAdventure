@@ -17,13 +17,14 @@ ProcessCommand ?words:
     [TickEverybody]
 
     Actions available:[NewLine]
-    [DoAll [ActionDescription ?action]]
+    [DoAll [ActionDescription ?_action]]
 
     [NumActions CurrentSituation ?numNumberedActions]
     Numbered Actions Available: 1 through ?numNumberedActions
     
 [end]
-ParseAction [?word]: [SituationAction CurrentSituation ?word]
+
+ParseAction [?word]: [SituationAction CurrentSituation ?word] [SetSituation]
 ParseAction ?words:
     [SyntacticForm ?words ?_mood ?parse]
     #Syntactic form: ?_mood/Write ?parse/WriteVerbatim
